@@ -2,7 +2,7 @@ Summary: A GNU tool which simplifies the build process for users.
 Name: make
 Epoch: 1
 Version: 3.79.1
-Release: 8
+Release: 9
 License: GPL
 Group: Development/Tools
 Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.gz
@@ -13,9 +13,9 @@ Buildroot: %{_tmppath}/%{name}-root
 
 %description
 A GNU tool for controlling the generation of executables and other
-non-source files of a program from the program's source files.  Make
+non-source files of a program from the program's source files. Make
 allows users to build and install packages without any significant
-knowledge about the details of the build process.  The details about
+knowledge about the details of the build process. The details about
 how the program should be built are provided for make in the program's
 makefile.
 
@@ -27,6 +27,11 @@ commonly used to simplify the process of installing programs.
 %patch -p1
 
 %build
+# Avoid reruning aclocal, automake, autoconf or autoheader
+touch aclocal.m4
+touch Makefile.in
+touch stamp-h.in
+touch configure
 %configure
 make
 
@@ -63,6 +68,9 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Fri Jan 25 2002 Jakub Jelinek <jakub@redhat.com>
+- rebuilt with gcc 3.1
+
 * Fri Jul  6 2001 Trond Eivind Glomsrød <teg@redhat.com>
 - s/Copyright/License/
 - langify
