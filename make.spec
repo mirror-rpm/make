@@ -2,12 +2,13 @@ Summary: A GNU tool which simplifies the build process for users.
 Name: make
 Epoch: 1
 Version: 3.80
-Release: 1
+Release: 2
 License: GPL
 Group: Development/Tools
 Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.bz2
 Patch: make-3.79.1-noclock_gettime.patch
 Patch2: make-3.79.1-siglist.patch
+Patch3: make-3.80-cvs.patch
 Prereq: /sbin/install-info
 Prefix: %{_prefix}
 Buildroot: %{_tmppath}/%{name}-root
@@ -27,6 +28,7 @@ commonly used to simplify the process of installing programs.
 %setup -q
 %patch -p1
 #%patch2 -p1
+%patch3 -p0
 
 %build
 #autoreconf -f --install
@@ -68,6 +70,9 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Tue Dec 02 2003 Florian La Roche <Florian.LaRoche@redhat.de>
+- add important bug-fixes from make home-page
+
 * Sun Nov 30 2003 Florian La Roche <Florian.LaRoche@redhat.de>
 - update to 3.80
 
