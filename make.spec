@@ -11,6 +11,7 @@ Patch: make-3.79.1-noclock_gettime.patch
 Patch2: make-3.79.1-siglist.patch
 Patch3: make-3.80-cvs.patch
 Patch4: make-3.80-j8k.patch
+Patch5: make-3.80-getcwd.patch
 Prereq: /sbin/install-info
 Prefix: %{_prefix}
 Buildroot: %{_tmppath}/%{name}-root
@@ -32,6 +33,7 @@ commonly used to simplify the process of installing programs.
 #%patch2 -p1
 %patch3 -p0
 %patch4 -p1
+%patch5 -p1
 
 %build
 #autoreconf -f --install
@@ -73,7 +75,7 @@ fi
 %{_infodir}/*.info*
 
 %changelog
-* Sat Mar  5 2005 Jakub Jelinek <jakub@redhat.com> 3.80-7
+* Mon Mar  7 2005 Jakub Jelinek <jakub@redhat.com> 3.80-7
 - rebuilt with GCC 4
 
 * Mon Dec 13 2004 Jakub Jelinek <jakub@redhat.com> 3.80-6
