@@ -1,0 +1,36 @@
+--- make-3.79.1/configure.in.sopwith	2002-12-03 09:51:07.000000000 -0500
++++ make-3.79.1/configure.in	2002-12-03 09:51:07.000000000 -0500
+@@ -32,7 +32,7 @@
+ AC_TYPE_PID_T
+ AC_TYPE_SIGNAL
+ AC_CHECK_HEADERS(stdlib.h unistd.h limits.h sys/param.h fcntl.h string.h \
+-		 memory.h sys/time.h sys/timeb.h)
++		 memory.h sys/time.h sys/timeb.h signal.h)
+ AC_PROG_CC_C_O
+ AM_PROG_CC_STDC
+ AC_C_CONST			dnl getopt needs this.
+@@ -144,7 +144,12 @@
+ fi
+ AC_MSG_RESULT($make_cv_union_wait)
+ 
+-AC_DECL_SYS_SIGLIST
++ac_includes_default="$ac_includes_default
++#ifdef HAVE_SIGNAL_H
++#include <signal.h>
++#endif
++"
++AC_SYS_SIGLIST_DECLARED
+ 
+ # The presence of the following is not meant to imply
+ # that make necessarily works on those systems.
+--- make-3.79.1/signame.c.sopwith	2002-12-03 09:53:15.000000000 -0500
++++ make-3.79.1/signame.c	2002-12-03 09:54:28.000000000 -0500
+@@ -47,7 +47,7 @@
+ 
+ #else	/* HAVE_SYS_SIGLIST.  */
+ 
+-#ifndef SYS_SIGLIST_DECLARED
++#if !defined(SYS_SIGLIST_DECLARED) && !defined(HAVE_DECL_SYS_SIGLIST)
+ extern char *sys_siglist[];
+ #endif	/* Not SYS_SIGLIST_DECLARED.  */
+ 

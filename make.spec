@@ -2,12 +2,13 @@ Summary: A GNU tool which simplifies the build process for users.
 Name: make
 Epoch: 1
 Version: 3.79.1
-Release: 14
+Release: 17
 License: GPL
 Group: Development/Tools
 Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.gz
 Patch: make-3.79.1-noclock_gettime.patch
 Patch1: make-3.79.1-autoconf.patch
+Patch2: make-3.79.1-siglist.patch
 Prereq: /sbin/install-info
 Prefix: %{_prefix}
 Buildroot: %{_tmppath}/%{name}-root
@@ -27,12 +28,13 @@ commonly used to simplify the process of installing programs.
 %setup -q
 %patch -p1
 %patch1 -p1 -b .ac253
+%patch2 -p1 -b .sys_siglist
 
 %build
 autoreconf -f --install
 %configure
 touch .deps/remote-stub.Po # Workaround for broken automake files
-make
+make %{?_smp_mflags}
 make check
 
 %install
@@ -68,6 +70,16 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Wed Jan 22 2003 Tim Powers <timp@redhat.com>
+- rebuilt
+
+* Sun Dec 29 2002 Tim Powers <timp@redhat.com>
+- fix references to %%install in the changelog so that the package will build
+
+* Tue Dec 03 2002 Elliot Lee <sopwith@redhat.com> 3.79.1-15
+- _smp_mflags
+- Fix ppc build (sys_siglist issues in patch2)
+
 * Fri Jun 21 2002 Tim Powers <timp@redhat.com>
 - automated rebuild
 
@@ -128,7 +140,7 @@ fi
 
 * Fri Jan 21 2000 Cristian Gafton <gafton@redhat.com>
 - apply patch to fix a /tmp race condition from Thomas Biege
-- simplify %install
+- simplify %%install
 
 * Sat Nov 27 1999 Jeff Johnson <jbj@redhat.com>
 - update to 3.78.1.
