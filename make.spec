@@ -2,9 +2,10 @@ Summary: A GNU tool which simplifies the build process for users.
 Name: make
 Epoch: 1
 Version: 3.80
-Release: 4
+Release: 5
 License: GPL
 Group: Development/Tools
+URL: http://www.gnu.org/software/make/
 Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.bz2
 Patch: make-3.79.1-noclock_gettime.patch
 Patch2: make-3.79.1-siglist.patch
@@ -70,6 +71,9 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Thu Oct  7 2004 Jakub Jelinek <jakub@redhat.com> 3.80-5
+- add URL rpm tag (#134799)
+
 * Tue Jun 15 2004 Elliot Lee <sopwith@redhat.com>
 - rebuilt
 
