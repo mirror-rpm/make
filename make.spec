@@ -2,7 +2,7 @@ Summary: A GNU tool which simplifies the build process for users.
 Name: make
 Epoch: 1
 Version: 3.80
-Release: 3
+Release: 4
 License: GPL
 Group: Development/Tools
 Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.bz2
@@ -70,6 +70,9 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Tue Jun 15 2004 Elliot Lee <sopwith@redhat.com>
+- rebuilt
+
 * Fri Feb 13 2004 Elliot Lee <sopwith@redhat.com>
 - rebuilt
 
