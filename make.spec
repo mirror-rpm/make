@@ -2,7 +2,7 @@ Summary: A GNU tool which simplifies the build process for users.
 Name: make
 Epoch: 1
 Version: 3.80
-Release: 5
+Release: 6
 License: GPL
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -10,6 +10,7 @@ Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.bz2
 Patch: make-3.79.1-noclock_gettime.patch
 Patch2: make-3.79.1-siglist.patch
 Patch3: make-3.80-cvs.patch
+Patch4: make-3.80-j8k.patch
 Prereq: /sbin/install-info
 Prefix: %{_prefix}
 Buildroot: %{_tmppath}/%{name}-root
@@ -30,6 +31,7 @@ commonly used to simplify the process of installing programs.
 %patch -p1
 #%patch2 -p1
 %patch3 -p0
+%patch4 -p1
 
 %build
 #autoreconf -f --install
@@ -71,6 +73,9 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Mon Dec 13 2004 Jakub Jelinek <jakub@redhat.com> 3.80-6
+- refuse -jN where N is bigger than PIPE_BUF (#142691, #17374)
+
 * Thu Oct  7 2004 Jakub Jelinek <jakub@redhat.com> 3.80-5
 - add URL rpm tag (#134799)
 
