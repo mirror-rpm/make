@@ -1,13 +1,12 @@
 Summary: A GNU tool which simplifies the build process for users.
 Name: make
 Epoch: 1
-Version: 3.79.1
-Release: 18
+Version: 3.80
+Release: 1
 License: GPL
 Group: Development/Tools
-Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.gz
+Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.bz2
 Patch: make-3.79.1-noclock_gettime.patch
-Patch1: make-3.79.1-autoconf.patch
 Patch2: make-3.79.1-siglist.patch
 Prereq: /sbin/install-info
 Prefix: %{_prefix}
@@ -27,13 +26,12 @@ commonly used to simplify the process of installing programs.
 %prep
 %setup -q
 %patch -p1
-%patch1 -p1 -b .ac253
-%patch2 -p1 -b .sys_siglist
+#%patch2 -p1
 
 %build
-autoreconf -f --install
+#autoreconf -f --install
 %configure
-touch .deps/remote-stub.Po # Workaround for broken automake files
+#touch .deps/remote-stub.Po # Workaround for broken automake files
 make %{?_smp_mflags}
 make check
 
@@ -44,7 +42,7 @@ rm -rf ${RPM_BUILD_ROOT}
 
 pushd ${RPM_BUILD_ROOT}
   ln -sf make .%{_bindir}/gmake
-  gzip -9nf .%{_infodir}/make.info*
+  #gzip -9nf .%{_infodir}/make.info*
   rm -f .%{_infodir}/dir
   chmod ug-s .%{_bindir}/*
 popd
@@ -70,6 +68,9 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Sun Nov 30 2003 Florian La Roche <Florian.LaRoche@redhat.de>
+- update to 3.80
+
 * Wed Jun 04 2003 Elliot Lee <sopwith@redhat.com>
 - rebuilt
 
