@@ -2,7 +2,7 @@ Summary: A GNU tool which simplifies the build process for users.
 Name: make
 Epoch: 1
 Version: 3.79.1
-Release: 5
+Release: 5a
 Copyright: GPL
 Group: Development/Tools
 Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.gz
@@ -40,6 +40,7 @@ rm -rf ${RPM_BUILD_ROOT}
   gzip -9nf .%{_infodir}/make.info*
   rm -f .%{_infodir}/dir
 }
+chmod 755 ${RPM_BUILD_ROOT}%{_bindir}/make
 
 %clean
 rm -rf ${RPM_BUILD_ROOT}
@@ -61,6 +62,10 @@ fi
 %{_datadir}/locale/*/LC_MESSAGES/make*
 
 %changelog
+* Mon Mar 18 2002 Phil Knirsch <pknirsch@redhat.com>
+- Fixed wrong file access permissions on /usr/bin/make if package was rebuilt
+  as root.
+
 * Mon Aug  7 2000 Tim Waugh <twaugh@redhat.com>
 - change info-dir entry so that 'info make' works (#15029).
 
