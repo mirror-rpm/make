@@ -2,8 +2,8 @@ Summary: A GNU tool which simplifies the build process for users.
 Name: make
 Epoch: 1
 Version: 3.79.1
-Release: 7
-Copyright: GPL
+Release: 8
+License: GPL
 Group: Development/Tools
 Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.gz
 Patch: make-3.79.1-noclock_gettime.patch
@@ -35,11 +35,14 @@ rm -rf ${RPM_BUILD_ROOT}
 
 %makeinstall
 
-{ cd ${RPM_BUILD_ROOT}
+pushd ${RPM_BUILD_ROOT}
   ln -sf make .%{_bindir}/gmake
   gzip -9nf .%{_infodir}/make.info*
   rm -f .%{_infodir}/dir
-}
+  chmod ug-s .%{_bindir}/*
+popd
+
+%find_lang %name
 
 %clean
 rm -rf ${RPM_BUILD_ROOT}
@@ -52,15 +55,19 @@ if [ $1 = 0 ]; then
    /sbin/install-info --delete %{_infodir}/make.info.gz %{_infodir}/dir --entry="* Make: (make).                 The GNU make utility."
 fi
 
-%files
+%files  -f %{name}.lang
 %defattr(-,root,root)
 %doc NEWS README
 %{_bindir}/*
 %{_mandir}/man*/*
 %{_infodir}/*.info*
-%{_datadir}/locale/*/LC_MESSAGES/make*
 
 %changelog
+* Fri Jul  6 2001 Trond Eivind Glomsrød <teg@redhat.com>
+- s/Copyright/License/
+- langify
+- Make sure it isn't setgid if built as root
+
 * Sun Jun 24 2001 Elliot Lee <sopwith@redhat.com>
 - Bump release + rebuild.
 
