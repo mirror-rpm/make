@@ -2,7 +2,7 @@ Summary: A GNU tool which simplifies the build process for users.
 Name: make
 Epoch: 1
 Version: 3.80
-Release: 6
+Release: 7
 License: GPL
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -73,6 +73,9 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Sat Mar  5 2005 Jakub Jelinek <jakub@redhat.com> 3.80-7
+- rebuilt with GCC 4
+
 * Mon Dec 13 2004 Jakub Jelinek <jakub@redhat.com> 3.80-6
 - refuse -jN where N is bigger than PIPE_BUF (#142691, #17374)
 
