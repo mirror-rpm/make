@@ -2,11 +2,12 @@ Summary: A GNU tool which simplifies the build process for users.
 Name: make
 Epoch: 1
 Version: 3.79.1
-Release: 9
+Release: 13
 License: GPL
 Group: Development/Tools
 Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.gz
 Patch: make-3.79.1-noclock_gettime.patch
+Patch1: make-3.79.1-autoconf.patch
 Prereq: /sbin/install-info
 Prefix: %{_prefix}
 Buildroot: %{_tmppath}/%{name}-root
@@ -25,15 +26,14 @@ commonly used to simplify the process of installing programs.
 %prep
 %setup -q
 %patch -p1
+%patch1 -p1 -b .ac253
 
 %build
-# Avoid reruning aclocal, automake, autoconf or autoheader
-touch aclocal.m4
-touch Makefile.in
-touch stamp-h.in
-touch configure
+autoreconf -f --install
 %configure
+touch .deps/remote-stub.Po # Workaround for broken automake files
 make
+make check
 
 %install
 rm -rf ${RPM_BUILD_ROOT}
@@ -68,6 +68,15 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Thu May 23 2002 Tim Powers <timp@redhat.com>
+- automated rebuild
+
+* Thu May 23 2002 Jakub Jelinek <jakub@redhat.com>
+- Run make check during build
+
+* Thu May 23 2002 Bernhard Rosenkraenzer <bero@redhat.com>
+- Fix build with current auto* tools
+
 * Fri Jan 25 2002 Jakub Jelinek <jakub@redhat.com>
 - rebuilt with gcc 3.1
 
