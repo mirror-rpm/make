@@ -2,7 +2,7 @@ Summary: A GNU tool which simplifies the build process for users.
 Name: make
 Epoch: 1
 Version: 3.79.1
-Release: 6
+Release: 7
 Copyright: GPL
 Group: Development/Tools
 Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.gz
@@ -61,6 +61,9 @@ fi
 %{_datadir}/locale/*/LC_MESSAGES/make*
 
 %changelog
+* Sun Jun 24 2001 Elliot Lee <sopwith@redhat.com>
+- Bump release + rebuild.
+
 * Mon Aug  7 2000 Tim Waugh <twaugh@redhat.com>
 - change info-dir entry so that 'info make' works (#15029).
 
