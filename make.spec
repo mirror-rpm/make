@@ -2,7 +2,7 @@ Summary: A GNU tool which simplifies the build process for users.
 Name: make
 Epoch: 1
 Version: 3.80
-Release: 7
+Release: 8
 License: GPL
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -12,6 +12,7 @@ Patch2: make-3.79.1-siglist.patch
 Patch3: make-3.80-cvs.patch
 Patch4: make-3.80-j8k.patch
 Patch5: make-3.80-getcwd.patch
+Patch6: make-3.80-err-reporting.patch
 Prereq: /sbin/install-info
 Prefix: %{_prefix}
 Buildroot: %{_tmppath}/%{name}-root
@@ -34,6 +35,7 @@ commonly used to simplify the process of installing programs.
 %patch3 -p0
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
 #autoreconf -f --install
@@ -75,6 +77,10 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Mon Aug 22 2005 Jakub Jelinek <jakub@redhat.com> 3.80-8
+- make sure errno for error reporting is not lost accross _() calls
+- report EOF on read pipe differently from read returning < 0 reporting
+
 * Mon Mar  7 2005 Jakub Jelinek <jakub@redhat.com> 3.80-7
 - rebuilt with GCC 4
 
