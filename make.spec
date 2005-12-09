@@ -2,7 +2,7 @@ Summary: A GNU tool which simplifies the build process for users.
 Name: make
 Epoch: 1
 Version: 3.80
-Release: 8
+Release: 8.1
 License: GPL
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -77,6 +77,9 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Fri Dec 09 2005 Jesse Keating <jkeating@redhat.com>
+- rebuilt
+
 * Mon Aug 22 2005 Jakub Jelinek <jakub@redhat.com> 3.80-8
 - make sure errno for error reporting is not lost accross _() calls
 - report EOF on read pipe differently from read returning < 0 reporting
