@@ -40,6 +40,12 @@ commonly used to simplify the process of installing programs.
 %patch7 -p1
 
 %build
+#aclocal
+config/missing --run aclocal -I config
+#automake -a
+config/missing --run automake --gnu Makefile
+#autoconf
+config/missing --run autoconf
 #autoreconf -f --install
 %configure
 #touch .deps/remote-stub.Po # Workaround for broken automake files
