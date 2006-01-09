@@ -2,7 +2,7 @@ Summary: A GNU tool which simplifies the build process for users.
 Name: make
 Epoch: 1
 Version: 3.80
-Release: 8.1
+Release: 9
 License: GPL
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -13,6 +13,7 @@ Patch3: make-3.80-cvs.patch
 Patch4: make-3.80-j8k.patch
 Patch5: make-3.80-getcwd.patch
 Patch6: make-3.80-err-reporting.patch
+Patch7: make-3.80-memory-1.patch
 Prereq: /sbin/install-info
 Prefix: %{_prefix}
 Buildroot: %{_tmppath}/%{name}-root
@@ -36,6 +37,7 @@ commonly used to simplify the process of installing programs.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %build
 #autoreconf -f --install
@@ -77,6 +79,10 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Mon Jan 09 2006 Petr Machata <pmachata@redhat.com> 3.80-9
+- Applied patch from hongjiu.lu@intel.com.  Somehow reduces make's
+  enormous memory consumption. (#175376)
+
 * Fri Dec 09 2005 Jesse Keating <jkeating@redhat.com>
 - rebuilt
 
