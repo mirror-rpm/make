@@ -2,7 +2,7 @@ Summary: A GNU tool which simplifies the build process for users.
 Name: make
 Epoch: 1
 Version: 3.80
-Release: 10.1
+Release: 10.2
 License: GPL
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -86,6 +86,9 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Fri Feb 10 2006 Jesse Keating <jkeating@redhat.com> - 1:3.80-10.2
+- bump again for double-long bug on ppc(64)
+
 * Tue Feb 07 2006 Jesse Keating <jkeating@redhat.com> - 1:3.80-10.1
 - rebuilt for new gcc4.1 snapshot and glibc changes
 
