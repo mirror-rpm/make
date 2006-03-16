@@ -2,19 +2,20 @@ Summary: A GNU tool which simplifies the build process for users.
 Name: make
 Epoch: 1
 Version: 3.80
-Release: 10.2
+Release: 11
 License: GPL
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
 Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.bz2
 Patch: make-3.79.1-noclock_gettime.patch
-Patch2: make-3.79.1-siglist.patch
+#Patch2: make-3.79.1-siglist.patch
 Patch3: make-3.80-cvs.patch
 Patch4: make-3.80-j8k.patch
 Patch5: make-3.80-getcwd.patch
 Patch6: make-3.80-err-reporting.patch
 #Patch7: make-3.80-memory-1.patch #buggy, fixed in memory-2.patch
 Patch7: make-3.80-memory-2.patch
+Patch8: make-3.80-patvar-2.patch
 Prereq: /sbin/install-info
 Prefix: %{_prefix}
 Buildroot: %{_tmppath}/%{name}-root
@@ -39,19 +40,15 @@ commonly used to simplify the process of installing programs.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 %build
-#aclocal
 config/missing --run aclocal -I config
-#automake -a
 config/missing --run automake --gnu Makefile
-#autoconf
 config/missing --run autoconf
-#autoreconf -f --install
 %configure
 #touch .deps/remote-stub.Po # Workaround for broken automake files
 make %{?_smp_mflags}
-make check
 
 %install
 rm -rf ${RPM_BUILD_ROOT}
@@ -66,6 +63,11 @@ pushd ${RPM_BUILD_ROOT}
 popd
 
 %find_lang %name
+
+%check
+echo ============TESTING===============
+make check
+echo ============END TESTING===========
 
 %clean
 rm -rf ${RPM_BUILD_ROOT}
@@ -86,6 +88,23 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Wed Mar 15 2006 Petr Machata <pmachata@redhat.com> 1:3.80-11
+- Applied (five years old) patch from Jonathan Kamens to allow make to
+  handle several pattern-specific variables (#52962).
+
+  The patch was changed so that it forces make to process pattern
+  specific variables in the same order as they appear in file.
+  (Upstream make behaves this way, too.)  This is change from old make
+  behavior, which processed the variables in reverse order.  In case
+  you used only x=a assignments, this had the effect of using the
+  first pattern specific variable that matched.  For x+=a this just
+  doesn't work, and it produces absolutely nonintuitive results.
+
+- (It would be great if make's target-specific variables were handled
+  the same way as pattern-specific ones, just without the pattern
+  component.  However current handling is documented and considered a
+  feature.)
+
 * Fri Feb 10 2006 Jesse Keating <jkeating@redhat.com> - 1:3.80-10.2
 - bump again for double-long bug on ppc(64)
 
