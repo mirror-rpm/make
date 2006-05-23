@@ -1,21 +1,17 @@
 Summary: A GNU tool which simplifies the build process for users.
 Name: make
 Epoch: 1
-Version: 3.80
-Release: 11
+Version: 3.81
+Release: 1
 License: GPL
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
 Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.bz2
 Patch: make-3.79.1-noclock_gettime.patch
-#Patch2: make-3.79.1-siglist.patch
-Patch3: make-3.80-cvs.patch
 Patch4: make-3.80-j8k.patch
 Patch5: make-3.80-getcwd.patch
-Patch6: make-3.80-err-reporting.patch
-#Patch7: make-3.80-memory-1.patch #buggy, fixed in memory-2.patch
-Patch7: make-3.80-memory-2.patch
-Patch8: make-3.80-patvar-2.patch
+Patch6: make-3.81-err-reporting.patch
+Patch7: make-3.81-memory.patch
 Prereq: /sbin/install-info
 Prefix: %{_prefix}
 Buildroot: %{_tmppath}/%{name}-root
@@ -34,13 +30,10 @@ commonly used to simplify the process of installing programs.
 %prep
 %setup -q
 %patch -p1
-#%patch2 -p1
-%patch3 -p0
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
 
 %build
 config/missing --run aclocal -I config
@@ -88,6 +81,12 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Tue May 23 2006 Petr Machata <pmachata@redhat.com> - 1:3.81-1
+- Upstream 3.81:
+  - Contains several backwards incompatible changes.  See NEWS inside
+    the source package to find out more.
+- memory patch and error reporting patch were ported to this version.
+
 * Wed Mar 15 2006 Petr Machata <pmachata@redhat.com> 1:3.80-11
 - Applied (five years old) patch from Jonathan Kamens to allow make to
   handle several pattern-specific variables (#52962).
