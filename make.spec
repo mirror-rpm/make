@@ -2,7 +2,7 @@ Summary: A GNU tool which simplifies the build process for users.
 Name: make
 Epoch: 1
 Version: 3.81
-Release: 1
+Release: 1.1
 License: GPL
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -81,6 +81,9 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Wed Jul 12 2006 Jesse Keating <jkeating@redhat.com> - 1:3.81-1.1
+- rebuild
+
 * Tue May 23 2006 Petr Machata <pmachata@redhat.com> - 1:3.81-1
 - Upstream 3.81:
   - Contains several backwards incompatible changes.  See NEWS inside
