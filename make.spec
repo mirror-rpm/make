@@ -2,7 +2,7 @@ Summary: A GNU tool which simplifies the build process for users.
 Name: make
 Epoch: 1
 Version: 3.81
-Release: 1.1
+Release: 2%{?dist}
 License: GPL
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -12,6 +12,7 @@ Patch4: make-3.80-j8k.patch
 Patch5: make-3.80-getcwd.patch
 Patch6: make-3.81-err-reporting.patch
 Patch7: make-3.81-memory.patch
+Patch8: make-3.81-rlimit.patch
 Prereq: /sbin/install-info
 Prefix: %{_prefix}
 Buildroot: %{_tmppath}/%{name}-root
@@ -34,6 +35,7 @@ commonly used to simplify the process of installing programs.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 %build
 config/missing --run aclocal -I config
@@ -81,6 +83,10 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Thu Jan 25 2007 Petr Machata <pmachata@redhat.com> - 1:3.81-2
+- make now restores rlimit to its original values before launching
+  subprocess (#214033)
+
 * Wed Jul 12 2006 Jesse Keating <jkeating@redhat.com> - 1:3.81-1.1
 - rebuild
 
