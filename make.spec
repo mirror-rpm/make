@@ -2,7 +2,7 @@ Summary: A GNU tool which simplifies the build process for users.
 Name: make
 Epoch: 1
 Version: 3.81
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: GPL
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -68,11 +68,11 @@ echo ============END TESTING===========
 rm -rf ${RPM_BUILD_ROOT}
 
 %post
-/sbin/install-info %{_infodir}/make.info.gz %{_infodir}/dir --entry="* Make: (make).                 The GNU make utility."
+/sbin/install-info %{_infodir}/make.info.gz %{_infodir}/dir --entry="* Make: (make).                 The GNU make utility." || :
 
 %preun
 if [ $1 = 0 ]; then
-   /sbin/install-info --delete %{_infodir}/make.info.gz %{_infodir}/dir --entry="* Make: (make).                 The GNU make utility."
+   /sbin/install-info --delete %{_infodir}/make.info.gz %{_infodir}/dir --entry="* Make: (make).                 The GNU make utility." || :
 fi
 
 %files  -f %{name}.lang
@@ -83,6 +83,10 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Thu Jan 25 2007 Petr Machata <pmachata@redhat.com> - 1:3.81-3
+- Ville Skytta: patch for non-failing %%post, %%preun
+- Resolves: #223709
+
 * Thu Jan 25 2007 Petr Machata <pmachata@redhat.com> - 1:3.81-2
 - make now restores rlimit to its original values before launching
   subprocess (#214033)
