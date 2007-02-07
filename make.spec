@@ -14,7 +14,7 @@ Patch5: make-3.80-getcwd.patch
 Patch6: make-3.81-err-reporting.patch
 Patch7: make-3.81-memory.patch
 Patch8: make-3.81-rlimit.patch
-Buildroot: %{_tmppath}/%{name}-root
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
 
