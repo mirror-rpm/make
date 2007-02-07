@@ -1,4 +1,5 @@
-Summary: A GNU tool which simplifies the build process for users.
+# -*- coding: utf-8 -*-
+Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.81
@@ -13,9 +14,9 @@ Patch5: make-3.80-getcwd.patch
 Patch6: make-3.81-err-reporting.patch
 Patch7: make-3.81-memory.patch
 Patch8: make-3.81-rlimit.patch
-Prereq: /sbin/install-info
-Prefix: %{_prefix}
 Buildroot: %{_tmppath}/%{name}-root
+Requires(post): /sbin/install-info
+Requires(preun): /sbin/install-info
 
 %description
 A GNU tool for controlling the generation of executables and other
@@ -42,20 +43,13 @@ config/missing --run aclocal -I config
 config/missing --run automake --gnu Makefile
 config/missing --run autoconf
 %configure
-#touch .deps/remote-stub.Po # Workaround for broken automake files
 make %{?_smp_mflags}
 
 %install
 rm -rf ${RPM_BUILD_ROOT}
-
-%makeinstall
-
-pushd ${RPM_BUILD_ROOT}
-  ln -sf make .%{_bindir}/gmake
-  #gzip -9nf .%{_infodir}/make.info*
-  rm -f .%{_infodir}/dir
-  chmod ug-s .%{_bindir}/*
-popd
+make DESTDIR=$RPM_BUILD_ROOT install
+ln -sf make ${RPM_BUILD_ROOT}/%{_bindir}/gmake
+rm -f ${RPM_BUILD_ROOT}/%{_infodir}/dir
 
 %find_lang %name
 
@@ -83,8 +77,12 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Fri Feb  2 2007 Petr Machata <pmachata@redhat.com> - 1:3.81-3
+- Tidy up the specfile per rpmlint comments
+- Use utf-8 and fix national characters in contributor's names
+
 * Thu Jan 25 2007 Petr Machata <pmachata@redhat.com> - 1:3.81-3
-- Ville Skytta: patch for non-failing %%post, %%preun
+- Ville Skyttä: patch for non-failing %%post, %%preun
 - Resolves: #223709
 
 * Thu Jan 25 2007 Petr Machata <pmachata@redhat.com> - 1:3.81-2
@@ -186,7 +184,7 @@ fi
 * Fri Jan 25 2002 Jakub Jelinek <jakub@redhat.com>
 - rebuilt with gcc 3.1
 
-* Fri Jul  6 2001 Trond Eivind Glomsr�d <teg@redhat.com>
+* Fri Jul  6 2001 Trond Eivind Glomsrød <teg@redhat.com>
 - s/Copyright/License/
 - langify
 - Make sure it isn't setgid if built as root
