@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.81
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: GPL
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -77,7 +77,7 @@ fi
 %{_infodir}/*.info*
 
 %changelog
-* Fri Feb  2 2007 Petr Machata <pmachata@redhat.com> - 1:3.81-3
+* Fri Feb  2 2007 Petr Machata <pmachata@redhat.com> - 1:3.81-4
 - Tidy up the specfile per rpmlint comments
 - Use utf-8 and fix national characters in contributor's names
 
