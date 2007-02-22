@@ -81,7 +81,7 @@ fi
 %changelog
 * Thu Feb 22 2007 Petr Machata <pmachata@redhat.com> - 1:3.81-5
 - Fix newline handling for quoted SHELL.
-- Resolves: #228732
+- Resolves: #219409
 
 * Fri Feb  2 2007 Petr Machata <pmachata@redhat.com> - 1:3.81-4
 - Tidy up the specfile per rpmlint comments
