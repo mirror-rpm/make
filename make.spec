@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.81
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: GPL
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -14,6 +14,7 @@ Patch5: make-3.80-getcwd.patch
 Patch6: make-3.81-err-reporting.patch
 Patch7: make-3.81-memory.patch
 Patch8: make-3.81-rlimit.patch
+Patch9: make-3.81-newlines.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
@@ -37,6 +38,7 @@ commonly used to simplify the process of installing programs.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 %build
 config/missing --run aclocal -I config
@@ -77,6 +79,10 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Thu Feb 22 2007 Petr Machata <pmachata@redhat.com> - 1:3.81-5
+- Fix newline handling for quoted SHELL.
+- Resolves: #228732
+
 * Fri Feb  2 2007 Petr Machata <pmachata@redhat.com> - 1:3.81-4
 - Tidy up the specfile per rpmlint comments
 - Use utf-8 and fix national characters in contributor's names
