@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.81
-Release: 5%{?dist}
+Release: 6%{?dist}
 License: GPL
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -57,7 +57,7 @@ rm -f ${RPM_BUILD_ROOT}/%{_infodir}/dir
 
 %check
 echo ============TESTING===============
-make check
+/usr/bin/env LANG=C make check
 echo ============END TESTING===========
 
 %clean
@@ -79,6 +79,10 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Fri Mar 16 2007 Petr Machata <pmachata@redhat.com> - 1:3.81-6
+- Always run testsuite with C locale.
+- Resolves: #232607
+
 * Thu Feb 22 2007 Petr Machata <pmachata@redhat.com> - 1:3.81-5
 - Fix newline handling for quoted SHELL.
 - Resolves: #219409
