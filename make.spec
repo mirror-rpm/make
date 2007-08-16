@@ -3,8 +3,8 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.81
-Release: 6%{?dist}
-License: GPL
+Release: 7%{?dist}
+License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
 Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.bz2
@@ -79,6 +79,9 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Thu Aug 16 2007 Petr Machata <pmachata@redhat.com> - 1:3.81-7
+- Fix licensing tag.
+
 * Fri Mar 16 2007 Petr Machata <pmachata@redhat.com> - 1:3.81-6
 - Always run testsuite with C locale.
 - Resolves: #232607
