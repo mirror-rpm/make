@@ -1,14 +1,3 @@
---- make-3.80/configure.in
-+++ make-3.80/configure.in
-@@ -91,7 +91,7 @@
- if test "$make_cv_file_timestamp_hi_res" = yes; then
-   # Solaris 2.5.1 needs -lposix4 to get the clock_gettime function.
-   # Solaris 7 prefers the library name -lrt to the obsolescent name -lposix4.
--  AC_SEARCH_LIBS(clock_gettime, [rt posix4])
-+  AC_SEARCH_LIBS(clock_gettime, [posix4])
-   if test "$ac_cv_search_clock_gettime" != no; then
-     AC_DEFINE(HAVE_CLOCK_GETTIME, 1,
- 	      [Define if you have the clock_gettime function.])
 --- make-3.80/configure
 +++ make-3.80/configure
 @@ -6794,7 +6794,7 @@

@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.81
-Release: 7%{?dist}
+Release: 8%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -27,9 +27,6 @@ knowledge about the details of the build process. The details about
 how the program should be built are provided for make in the program's
 makefile.
 
-The GNU make tool should be installed on your system because it is
-commonly used to simplify the process of installing programs.
-
 %prep
 %setup -q
 %patch -p1
@@ -41,9 +38,6 @@ commonly used to simplify the process of installing programs.
 %patch9 -p1
 
 %build
-config/missing --run aclocal -I config
-config/missing --run automake --gnu Makefile
-config/missing --run autoconf
 %configure
 make %{?_smp_mflags}
 
@@ -51,6 +45,7 @@ make %{?_smp_mflags}
 rm -rf ${RPM_BUILD_ROOT}
 make DESTDIR=$RPM_BUILD_ROOT install
 ln -sf make ${RPM_BUILD_ROOT}/%{_bindir}/gmake
+ln -sf make.1 ${RPM_BUILD_ROOT}/%{_mandir}/man1/gmake.1
 rm -f ${RPM_BUILD_ROOT}/%{_infodir}/dir
 
 %find_lang %name
@@ -73,12 +68,16 @@ fi
 
 %files  -f %{name}.lang
 %defattr(-,root,root)
-%doc NEWS README
+%doc NEWS README COPYING AUTHORS
 %{_bindir}/*
 %{_mandir}/man*/*
 %{_infodir}/*.info*
 
 %changelog
+* Thu Oct  4 2007 Petr Machata <pmachata@redhat.com> - 1:3.81-8
+- Cleaned up per merge review.
+- Related: #226120
+
 * Thu Aug 16 2007 Petr Machata <pmachata@redhat.com> - 1:3.81-7
 - Fix licensing tag.
 
