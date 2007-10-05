@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.81
-Release: 8%{?dist}
+Release: 9%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -15,6 +15,7 @@ Patch6: make-3.81-err-reporting.patch
 Patch7: make-3.81-memory.patch
 Patch8: make-3.81-rlimit.patch
 Patch9: make-3.81-newlines.patch
+Patch10: make-3.81-jobserver.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
@@ -36,6 +37,7 @@ makefile.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 
 %build
 %configure
@@ -74,6 +76,10 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Thu Oct  4 2007 Petr Machata <pmachata@redhat.com> - 1:3.81-9
+- Fix parallel builds with reexec.
+- Related: #212111, #211290
+
 * Thu Oct  4 2007 Petr Machata <pmachata@redhat.com> - 1:3.81-8
 - Cleaned up per merge review.
 - Related: #226120
