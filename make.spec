@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.81
-Release: 9%{?dist}
+Release: 10%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -76,7 +76,7 @@ fi
 %{_infodir}/*.info*
 
 %changelog
-* Thu Oct  4 2007 Petr Machata <pmachata@redhat.com> - 1:3.81-9
+* Thu Oct  4 2007 Petr Machata <pmachata@redhat.com> - 1:3.81-10
 - Fix parallel builds with reexec.
 - Related: #212111, #211290
 
