@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.81
-Release: 10%{?dist}
+Release: 11%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -76,6 +76,9 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Tue Feb 19 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 1:3.81-11
+- Autorebuild for GCC 4.3
+
 * Thu Oct  4 2007 Petr Machata <pmachata@redhat.com> - 1:3.81-10
 - Fix parallel builds with reexec.
 - Related: #212111, #211290
