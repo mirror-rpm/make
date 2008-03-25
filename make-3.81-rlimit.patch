@@ -1,6 +1,6 @@
-diff -Burp make-3.81/job.c make-3.81-pm/job.c
---- make-3.81/job.c	2006-11-30 11:00:23.000000000 +0100
-+++ make-3.81-pm/job.c	2006-11-30 10:58:46.000000000 +0100
+diff -urp make-3.81/job.c make-3.81-pm/job.c
+--- make-3.81/job.c	2008-03-25 18:15:38.000000000 +0100
++++ make-3.81-pm/job.c	2008-03-25 17:51:11.000000000 +0100
 @@ -2079,6 +2079,9 @@ exec_command (char **argv, char **envp)
  # else
  
@@ -11,10 +11,10 @@ diff -Burp make-3.81/job.c make-3.81-pm/job.c
    environ = envp;
    execvp (argv[0], argv);
  
-diff -Burp make-3.81/main.c make-3.81-pm/main.c
---- make-3.81/main.c	2006-11-30 11:00:23.000000000 +0100
-+++ make-3.81-pm/main.c	2006-11-30 10:38:04.000000000 +0100
-@@ -44,12 +44,51 @@ Foundation, Inc., 51 Franklin St, Fifth 
+diff -urp make-3.81/main.c make-3.81-pm/main.c
+--- make-3.81/main.c	2008-03-25 18:15:38.000000000 +0100
++++ make-3.81-pm/main.c	2008-03-25 18:14:04.000000000 +0100
+@@ -44,12 +44,53 @@ Foundation, Inc., 51 Franklin St, Fifth 
  # include <fcntl.h>
  #endif
  
@@ -63,14 +63,16 @@ diff -Burp make-3.81/main.c make-3.81-pm/main.c
 +  if (getrlimit (RLIMIT_STACK, &rlim) == 0)
 +    {
 +      rlim.rlim_cur = setrlimit_orig_cur;
-+      if (setrlimit (RLIMIT_STACK, &rlim) != -1)
-+	setrlimit_succeeded = 0;
++      setrlimit (RLIMIT_STACK, &rlim);
++      /* Don't reset the setrlimit_succeeded flag.  This can be called
++	 after vfork, in which case the flag is in memory shared with
++	 the parent. */
 +    }
 +}
  #endif
  
  #ifdef _AMIGA
-@@ -915,17 +954,7 @@ main (int argc, char **argv, char **envp
+@@ -915,17 +956,7 @@ main (int argc, char **argv, char **envp
  #endif
  
  #ifdef SET_STACK_SIZE
@@ -89,9 +91,9 @@ diff -Burp make-3.81/main.c make-3.81-pm/main.c
  #endif
  
  #ifdef HAVE_ATEXIT
-diff -Burp make-3.81/make.h make-3.81-pm/make.h
---- make-3.81/make.h	2006-11-30 11:00:23.000000000 +0100
-+++ make-3.81-pm/make.h	2006-11-30 10:29:50.000000000 +0100
+diff -urp make-3.81/make.h make-3.81-pm/make.h
+--- make-3.81/make.h	2008-03-25 18:15:38.000000000 +0100
++++ make-3.81-pm/make.h	2008-03-25 17:51:10.000000000 +0100
 @@ -346,6 +346,13 @@ extern int strcmpi (const char *,const c
  #define N_(msgid)           gettext_noop (msgid)
  #define S_(msg1,msg2,num)   ngettext (msg1,msg2,num)
@@ -106,3 +108,4 @@ diff -Burp make-3.81/make.h make-3.81-pm/make.h
  /* Handle other OSs.  */
  #if defined(HAVE_DOS_PATHS)
  # define PATH_SEPARATOR_CHAR ';'
+diff -urp make-3.81/w32/Makefile make-3.81-pm/w32/Makefile

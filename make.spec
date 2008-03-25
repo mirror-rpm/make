@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.81
-Release: 11%{?dist}
+Release: 12%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -76,6 +76,11 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Tue Mar 25 2008 Petr Machata <pmachata@redhat.com> - 1:3.81-12
+- Fix the rlimit patch.  The success flag is kept in memory shared
+  with parent process after vfork, and so cannot be reset.
+- Related: #214033
+
 * Tue Feb 19 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 1:3.81-11
 - Autorebuild for GCC 4.3
 
