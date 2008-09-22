@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.81
-Release: 12%{?dist}
+Release: 13%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -16,6 +16,7 @@ Patch7: make-3.81-memory.patch
 Patch8: make-3.81-rlimit.patch
 Patch9: make-3.81-newlines.patch
 Patch10: make-3.81-jobserver.patch
+Patch11: make-3.81-fdleak.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
@@ -38,6 +39,7 @@ makefile.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 %build
 %configure
@@ -76,6 +78,10 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Tue Sep 16 2008 Petr Machata <pmachata@redhat.com> - 1:3.81-13
+- Mark opened files as cloexec to prevent their leaking through fork
+- Resolves: #462090
+
 * Tue Mar 25 2008 Petr Machata <pmachata@redhat.com> - 1:3.81-12
 - Fix the rlimit patch.  The success flag is kept in memory shared
   with parent process after vfork, and so cannot be reset.
