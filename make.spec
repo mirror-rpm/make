@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.81
-Release: 13%{?dist}
+Release: 14%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -78,6 +78,9 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Mon Sep 22 2008 Petr Machata <pmachata@redhat.com> - 1:3.81-14
+- Fix patches to apply cleanly with fuzz=0
+
 * Tue Sep 16 2008 Petr Machata <pmachata@redhat.com> - 1:3.81-13
 - Mark opened files as cloexec to prevent their leaking through fork
 - Resolves: #462090

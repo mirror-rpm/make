@@ -1,11 +1,15 @@
---- make-3.80/make.h.jj	2002-09-11 12:55:44.000000000 -0400
-+++ make-3.80/make.h	2005-03-07 09:24:53.000000000 -0500
-@@ -474,7 +474,7 @@ extern long int lseek ();
+Only in make-3.81-pm/: configure.orig
+diff -urp make-3.81/make.h make-3.81-pm/make.h
+--- make-3.81/make.h	2006-02-16 00:54:43.000000000 +0100
++++ make-3.81-pm/make.h	2008-09-22 10:53:35.000000000 +0200
+@@ -488,7 +488,7 @@ extern long int lseek ();
  #endif  /* Not GNU C library or POSIX.  */
  
  #ifdef  HAVE_GETCWD
 -# if !defined(VMS) && !defined(__DECC)
 +# if !defined(VMS) && !defined(__DECC) && !defined(getcwd)
  extern char *getcwd ();
- #endif
+ # endif
  #else
+Only in make-3.81-pm/: make.h~
+Only in make-3.81-pm/: make.h.orig
