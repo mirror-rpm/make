@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.81
-Release: 14%{?dist}
+Release: 15%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -78,6 +78,9 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Wed Feb 25 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:3.81-15
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
+
 * Mon Sep 22 2008 Petr Machata <pmachata@redhat.com> - 1:3.81-14
 - Fix patches to apply cleanly with fuzz=0
 
