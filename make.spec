@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.81
-Release: 17%{?dist}
+Release: 18%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -65,11 +65,15 @@ echo ============END TESTING===========
 rm -rf ${RPM_BUILD_ROOT}
 
 %post
-/sbin/install-info %{_infodir}/make.info.gz %{_infodir}/dir --entry="* Make: (make).                 The GNU make utility." || :
+if [ -f %{_infodir}/make.info.gz ]; then # for --excludedocs
+   /sbin/install-info %{_infodir}/make.info.gz %{_infodir}/dir --entry="* Make: (make).                 The GNU make utility." || :
+fi
 
 %preun
 if [ $1 = 0 ]; then
-   /sbin/install-info --delete %{_infodir}/make.info.gz %{_infodir}/dir --entry="* Make: (make).                 The GNU make utility." || :
+   if [ -f %{_infodir}/make.info.gz ]; then # for --excludedocs
+      /sbin/install-info --delete %{_infodir}/make.info.gz %{_infodir}/dir --entry="* Make: (make).                 The GNU make utility." || :
+   fi
 fi
 
 %files  -f %{name}.lang
@@ -80,9 +84,12 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Tue Aug 11 2009 Petr Machata <pmachata@redhat.com> - 1:3.81-18
+- Fix installation with --excludedocs
+- Resolves: #515917
+
 * Fri Jul 31 2009 Petr Machata <pmachata@redhat.com> - 1:3.81-17
-- Replace the use of strcpy on overlapping areas with memmove.  It's
-  possible that this ...
+- Replace the use of strcpy on overlapping areas with memmove
 - Resolves: #514721
 
 * Sat Jul 25 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:3.81-16
