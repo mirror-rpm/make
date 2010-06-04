@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.81
-Release: 18%{?dist}
+Release: 19%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -18,6 +18,7 @@ Patch9: make-3.81-newlines.patch
 Patch10: make-3.81-jobserver.patch
 Patch11: make-3.81-fdleak.patch
 Patch12: make-3.81-strcpy-overlap.patch
+Patch13: make-3.81-recursion-test.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
@@ -42,6 +43,7 @@ makefile.
 %patch10 -p1
 %patch11 -p1
 %patch12 -p0
+%patch13 -p1
 
 %build
 %configure
@@ -84,6 +86,10 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Fri Jun  4 2010 Petr Machata <pmachata@redhat.com> - 1:3.81-19
+- Fix testsuite on F13
+- Resolves: #600004
+
 * Tue Aug 11 2009 Petr Machata <pmachata@redhat.com> - 1:3.81-18
 - Fix installation with --excludedocs
 - Resolves: #515917
