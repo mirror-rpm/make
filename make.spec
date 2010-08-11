@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.81
-Release: 20%{?dist}
+Release: 21%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -23,6 +23,7 @@ Patch14: make-3.81-double-free.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
+BuildRequires: procps
 
 %description
 A GNU tool for controlling the generation of executables and other
@@ -88,6 +89,10 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Wed Aug 11 2010 Petr Machata <pmachata@redhat.com> - 1:3.81-21
+- Add BR procps
+- Resolves: #616813
+
 * Thu Jul  1 2010 Petr Machata <pmachata@redhat.com> - 1:3.81-20
 - Add a patch by Steve Kemp @debian that might fix the double free
   problem.
