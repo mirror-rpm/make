@@ -2,24 +2,20 @@
 Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
-Version: 3.81
-Release: 21%{?dist}
+Version: 3.82
+Release: 1%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
 Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.bz2
-Patch: make-3.79.1-noclock_gettime.patch
-Patch4: make-3.80-j8k.patch
-Patch5: make-3.80-getcwd.patch
-Patch6: make-3.81-err-reporting.patch
-Patch7: make-3.81-memory.patch
-Patch8: make-3.81-rlimit.patch
-Patch9: make-3.81-newlines.patch
-Patch10: make-3.81-jobserver.patch
-Patch11: make-3.81-fdleak.patch
-Patch12: make-3.81-strcpy-overlap.patch
-Patch13: make-3.81-recursion-test.patch
-Patch14: make-3.81-double-free.patch
+Patch1: make-3.82-noclock_gettime.patch
+Patch2: make-3.82-j8k.patch
+Patch3: make-3.82-getcwd.patch
+Patch4: make-3.82-err-reporting.patch
+Patch5: make-3.81-memory.patch
+Patch6: make-3.82-weird-shell.patch
+Patch7: make-3.82-newlines.patch
+Patch8: make-3.82-jobserver.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
@@ -35,18 +31,14 @@ makefile.
 
 %prep
 %setup -q
-%patch -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 %patch4 -p1
-%patch5 -p1
+#%patch5 -p1
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p0
-%patch13 -p1
-%patch14 -p1
 
 %build
 %configure
@@ -89,6 +81,15 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Wed Aug 11 2010 Petr Machata <pmachata@redhat.com> - 1:3.82-1
+- Upstream 3.82:
+  - Drop rlimit, fdleak, strcpy-overlap, recursion-test, double-free
+    patches, make supports this functionality now
+  - Disable the memory patch for the time being
+  - Port remaining patches
+  - Add weird-shell patch, upstream bug 30748
+- Resolves: #618998
+
 * Wed Aug 11 2010 Petr Machata <pmachata@redhat.com> - 1:3.81-21
 - Add BR procps
 - Resolves: #616813
