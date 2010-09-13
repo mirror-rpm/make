@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.82
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -16,6 +16,7 @@ Patch5: make-3.81-memory.patch
 Patch6: make-3.82-weird-shell.patch
 Patch7: make-3.82-newlines.patch
 Patch8: make-3.82-jobserver.patch
+Patch9: make-3.82-bugfixes.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
@@ -39,6 +40,7 @@ makefile.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 %build
 %configure
@@ -81,6 +83,10 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Mon Sep 13 2010 Petr Machata <pmachata@redhat.com> - 1:3.82-2
+- Add upstream fixes for upstream bugs 30612 and 30723
+- Resolves: #631552
+
 * Wed Aug 11 2010 Petr Machata <pmachata@redhat.com> - 1:3.82-1
 - Upstream 3.82:
   - Drop rlimit, fdleak, strcpy-overlap, recursion-test, double-free
