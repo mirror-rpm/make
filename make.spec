@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.82
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -83,6 +83,9 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Wed Sep 29 2010 jkeating - 1:3.82-3
+- Rebuilt for gcc bug 634757
+
 * Mon Sep 13 2010 Petr Machata <pmachata@redhat.com> - 1:3.82-2
 - Add upstream fixes for upstream bugs 30612 and 30723
 - Resolves: #631552
