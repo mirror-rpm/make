@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.82
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -17,6 +17,7 @@ Patch6: make-3.82-weird-shell.patch
 Patch7: make-3.82-newlines.patch
 Patch8: make-3.82-jobserver.patch
 Patch9: make-3.82-bugfixes.patch
+Patch10: make-3.82-sort-blank.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
@@ -41,6 +42,7 @@ makefile.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 
 %build
 %configure
@@ -83,6 +85,11 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Wed Oct 27 2010 Petr Machata <pmachata@redhat.com> - 1:3.82-4
+- Fix a discrepancy between behavior of find_next_token and
+  pre-allocation of token memory in func_sort.
+- Resolves: #643359
+
 * Wed Sep 29 2010 jkeating - 1:3.82-3
 - Rebuilt for gcc bug 634757
 
