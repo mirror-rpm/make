@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.82
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -85,6 +85,9 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:3.82-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+
 * Wed Oct 27 2010 Petr Machata <pmachata@redhat.com> - 1:3.82-4
 - Fix a discrepancy between behavior of find_next_token and
   pre-allocation of token memory in func_sort.
