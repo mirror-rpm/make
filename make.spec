@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.82
-Release: 6%{?dist}
+Release: 7%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -87,6 +87,9 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Wed Oct 26 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:3.82-7
+- Rebuilt for glibc bug#747377
+
 * Tue May 12 2011 Lubomir Rintel <lkundrak@v3.sk> - 1:3.82-6
 - Fix free-after-use with nested assignments (#703104)
 
