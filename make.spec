@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.82
-Release: 6%{?dist}
+Release: 7%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -19,6 +19,8 @@ Patch8: make-3.82-jobserver.patch
 Patch9: make-3.82-bugfixes.patch
 Patch10: make-3.82-sort-blank.patch
 Patch11: make-3.82-copy-on-expand.patch
+# Uptream fix of https://savannah.gnu.org/bugs/?33873
+Patch12: make-3.82-parallel-remake.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
@@ -45,6 +47,7 @@ makefile.
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p0
 
 %build
 %configure
@@ -87,6 +90,10 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Thu Nov  3 2011 Petr Machata <pmachata@redhat.com> - 1:3.82-7
+- Add a patch for preserving -j across Makefile rebuild
+- Resolves: #698702
+
 * Tue May 12 2011 Lubomir Rintel <lkundrak@v3.sk> - 1:3.82-6
 - Fix free-after-use with nested assignments (#703104)
 
