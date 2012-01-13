@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.82
-Release: 8%{?dist}
+Release: 9%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -90,6 +90,9 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:3.82-9
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
+
 * Thu Nov  3 2011 Petr Machata <pmachata@redhat.com> - 1:3.82-8
 - Add a patch for preserving -j across Makefile rebuild
 - Resolves: #698702
