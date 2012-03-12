@@ -3,11 +3,12 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.82
-Release: 9%{?dist}
+Release: 10%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
 Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.bz2
+
 Patch1: make-3.82-noclock_gettime.patch
 Patch2: make-3.82-j8k.patch
 Patch3: make-3.82-getcwd.patch
@@ -19,8 +20,16 @@ Patch8: make-3.82-jobserver.patch
 Patch9: make-3.82-bugfixes.patch
 Patch10: make-3.82-sort-blank.patch
 Patch11: make-3.82-copy-on-expand.patch
+
 # Uptream fix of https://savannah.gnu.org/bugs/?33873
 Patch12: make-3.82-parallel-remake.patch
+
+# http://savannah.gnu.org/bugs/?34335
+Patch13: make-3.82-warn_undefined_function.patch
+
+# http://lists.gnu.org/archive/html/bug-make/2011-06/msg00032.html
+Patch14: make-3.82-trace.patch
+
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
@@ -48,6 +57,8 @@ makefile.
 %patch10 -p1
 %patch11 -p1
 %patch12 -p0
+%patch13 -p2
+%patch14 -p1
 
 %build
 %configure
@@ -90,6 +101,11 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Mon Mar 12 2012 Petr Machata <pmachata@redhat.com> - 1:3.82-10
+- Apply the following patches, proposed upstream by Norbert Thiebaud:
+  - A patch for warning on call of undefined function
+  - A patch for tracing calls to "eval" and "call"
+
 * Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:3.82-9
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
