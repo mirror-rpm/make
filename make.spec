@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.82
-Release: 10%{?dist}
+Release: 11%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -29,6 +29,9 @@ Patch13: make-3.82-warn_undefined_function.patch
 
 # http://lists.gnu.org/archive/html/bug-make/2011-06/msg00032.html
 Patch14: make-3.82-trace.patch
+
+# http://lists.gnu.org/archive/html/bug-make/2011-04/msg00002.html
+Patch15: make-3.82-expensive_glob.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
@@ -59,6 +62,7 @@ makefile.
 %patch12 -p0
 %patch13 -p2
 %patch14 -p1
+%patch15 -p0
 
 %build
 %configure
@@ -101,6 +105,9 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Tue Mar 13 2012 Petr Machata <pmachata@redhat.com> - 1:3.82-11
+- Add a patch for avoiding glob if possible by Michael Meeks
+
 * Mon Mar 12 2012 Petr Machata <pmachata@redhat.com> - 1:3.82-10
 - Apply the following patches, proposed upstream by Norbert Thiebaud:
   - A patch for warning on call of undefined function
