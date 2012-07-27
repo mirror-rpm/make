@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.82
-Release: 11%{?dist}
+Release: 12%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -105,6 +105,9 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Fri Jul 27 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:3.82-12
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
 * Tue Mar 13 2012 Petr Machata <pmachata@redhat.com> - 1:3.82-11
 - Add a patch for avoiding glob if possible by Michael Meeks
 
