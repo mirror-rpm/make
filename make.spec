@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.82
-Release: 12%{?dist}
+Release: 13%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -36,6 +36,9 @@ Patch14: make-3.82-trace.patch
 # http://lists.gnu.org/archive/html/bug-make/2011-04/msg00002.html
 Patch15: make-3.82-expensive_glob.patch
 
+# Upstream: https://savannah.gnu.org/bugs/?30653
+Patch16: make-3.82-dont-prune-intermediate.patch
+
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
@@ -66,6 +69,8 @@ makefile.
 %patch13 -p2
 %patch14 -p1
 %patch15 -p0
+%patch16 -p0
+rm -f tests/scripts/features/parallelism.orig
 
 %build
 %configure
@@ -108,6 +113,10 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Mon Sep 10 2012 Petr Machata <pmachata@redhat.com> - 1:3.82-13
+- Add fix for upstream bug 30653
+- Resolves: #835424
+
 * Fri Jul 27 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:3.82-12
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
