@@ -14,14 +14,17 @@ Patch2: make-3.82-j8k.patch
 Patch3: make-3.82-getcwd.patch
 Patch4: make-3.82-err-reporting.patch
 Patch5: make-3.81-memory.patch
+
+# Upstream: https://savannah.gnu.org/bugs/?30748
 Patch6: make-3.82-weird-shell.patch
+
 Patch7: make-3.82-newlines.patch
 Patch8: make-3.82-jobserver.patch
 Patch9: make-3.82-bugfixes.patch
 Patch10: make-3.82-sort-blank.patch
 Patch11: make-3.82-copy-on-expand.patch
 
-# Uptream fix of https://savannah.gnu.org/bugs/?33873
+# Upstream: https://savannah.gnu.org/bugs/?33873
 Patch12: make-3.82-parallel-remake.patch
 
 # http://savannah.gnu.org/bugs/?34335
