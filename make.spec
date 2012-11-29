@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.82
-Release: 13%{?dist}
+Release: 14%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -13,7 +13,6 @@ Patch1: make-3.82-noclock_gettime.patch
 Patch2: make-3.82-j8k.patch
 Patch3: make-3.82-getcwd.patch
 Patch4: make-3.82-err-reporting.patch
-Patch5: make-3.81-memory.patch
 
 # Upstream: https://savannah.gnu.org/bugs/?30748
 Patch6: make-3.82-weird-shell.patch
@@ -58,7 +57,6 @@ makefile.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-#%patch5 -p1
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
@@ -113,6 +111,9 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Thu Nov 29 2012 Petr Machata <pmachata@redhat.com> - 1:3.82-14
+- Drop patch5, which hasn't been applied for years
+
 * Mon Sep 10 2012 Petr Machata <pmachata@redhat.com> - 1:3.82-13
 - Add fix for upstream bug 30653
 - Resolves: #835424
