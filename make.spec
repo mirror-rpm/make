@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.82
-Release: 15%{?dist}
+Release: 16%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -38,6 +38,9 @@ Patch15: make-3.82-expensive_glob.patch
 # Upstream: https://savannah.gnu.org/bugs/?30653
 Patch16: make-3.82-dont-prune-intermediate.patch
 
+# https://bugzilla.redhat.com/show_bug.cgi?id=926115
+Patch17: make-3.82-aarch64.patch
+
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
@@ -68,6 +71,7 @@ makefile.
 %patch14 -p1
 %patch15 -p0
 %patch16 -p0
+%patch17 -p1
 rm -f tests/scripts/features/parallelism.orig
 
 %build
@@ -111,6 +115,9 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Thu Apr  4 2013 Petr Machata <pmachata@redhat.com> - 1:3.82-16
+- Update config.sub and config.guess to support aarch64
+
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:3.82-15
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
