@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.82
-Release: 16%{?dist}
+Release: 17%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -19,7 +19,11 @@ Patch6: make-3.82-weird-shell.patch
 
 Patch7: make-3.82-newlines.patch
 Patch8: make-3.82-jobserver.patch
+
+# Upstream: https://savannah.gnu.org/bugs/?30612
+# Upstream: https://savannah.gnu.org/bugs/?30723
 Patch9: make-3.82-bugfixes.patch
+
 Patch10: make-3.82-sort-blank.patch
 Patch11: make-3.82-copy-on-expand.patch
 
@@ -40,6 +44,9 @@ Patch16: make-3.82-dont-prune-intermediate.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=926115
 Patch17: make-3.82-aarch64.patch
+
+# Additional fix for https://savannah.gnu.org/bugs/?30612
+Patch18: make-3.82-empty-members.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
@@ -72,6 +79,7 @@ makefile.
 %patch15 -p0
 %patch16 -p0
 %patch17 -p1
+%patch18 -p1
 rm -f tests/scripts/features/parallelism.orig
 
 %build
@@ -115,6 +123,9 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Wed Jun 19 2013 Petr Machata <pmachata@redhat.com> - 1:3.82-17
+- Add another fix for upstream bug 30612
+
 * Thu Apr  4 2013 Petr Machata <pmachata@redhat.com> - 1:3.82-16
 - Update config.sub and config.guess to support aarch64
 
