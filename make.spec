@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.82
-Release: 17%{?dist}
+Release: 18%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -48,6 +48,11 @@ Patch17: make-3.82-aarch64.patch
 # Additional fix for https://savannah.gnu.org/bugs/?30612
 Patch18: make-3.82-empty-members.patch
 
+# Can't use a stem and a glob in the same dependency.
+# https://savannah.gnu.org/bugs/?39310
+# https://bugzilla.redhat.com/show_bug.cgi?id=987672
+Patch19: make-3.82-stem_glob.patch
+
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
@@ -80,6 +85,7 @@ makefile.
 %patch16 -p0
 %patch17 -p1
 %patch18 -p1
+%patch19 -p1
 rm -f tests/scripts/features/parallelism.orig
 
 %build
@@ -123,6 +129,10 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Fri Jul 26 2013 Petr Machata <pmachata@redhat.com> - 1:3.82-18
+- Backport upstream patch that adds wildcard expansion to pattern
+  rules. (make-3.82-stem_glob.patch)
+
 * Wed Jun 19 2013 Petr Machata <pmachata@redhat.com> - 1:3.82-17
 - Add another fix for upstream bug 30612
 
