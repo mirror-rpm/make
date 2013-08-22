@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 3.82
-Release: 18%{?dist}
+Release: 19%{?dist}
 License: GPLv2+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -53,6 +53,14 @@ Patch18: make-3.82-empty-members.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=987672
 Patch19: make-3.82-stem_glob.patch
 
+# Stack limit not restored for processes spawned through $(shell)
+# https://savannah.gnu.org/bugs/index.php?39851
+Patch20: make-3.82-func_shell-rlimit.patch
+
+# This to make the test targets/SECONDARY deterministic.  The above
+# patch causes this to occasionally fail.
+Patch21: make-3.82-tests-SECONDARY.patch
+
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
@@ -86,6 +94,9 @@ makefile.
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
+%patch20 -p1
+%patch21 -p1
+
 rm -f tests/scripts/features/parallelism.orig
 
 %build
@@ -129,6 +140,11 @@ fi
 %{_infodir}/*.info*
 
 %changelog
+* Thu Aug 22 2013 Petr Machata <pmachata@redhat.com> - 1:3.82-19
+- make now restores rlimit to its original values before launching
+  subprocess via $(shell) (make-3.82-func_shell-rlimit.patch)
+- Determinize one test (make-3.82-tests-SECONDARY.patch)
+
 * Fri Jul 26 2013 Petr Machata <pmachata@redhat.com> - 1:3.82-18
 - Backport upstream patch that adds wildcard expansion to pattern
   rules. (make-3.82-stem_glob.patch)
