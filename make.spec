@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 4.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv3+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -96,6 +96,9 @@ fi
 %{_includedir}/gnumake.h
 
 %changelog
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:4.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Wed Apr 30 2014 Patsy Franklin <pfrankli@redhat.com> 1:4.0-1
 - Rebase to make-4.0
   - Created make-devel sub-package to handle new dependency on gnumake.h.
