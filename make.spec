@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 4.0
-Release: 3.1%{?dist}
+Release: 4.1%{?dist}
 License: GPLv3+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -96,6 +96,10 @@ fi
 %{_includedir}/gnumake.h
 
 %changelog
+* Sat Feb 21 2015 Till Maas <opensource@till.name> - 1:4.0-4.1
+- Rebuilt for Fedora 23 Change
+  https://fedoraproject.org/wiki/Changes/Harden_all_packages_with_position-independent_code
+
 * Wed Sep 03 2014 Kyle McMartin <kyle@fedoraproject.org> - 1:4.0-3.1
 - Pass the test-suite unconditionally until I fix the tests to cope with
   deterministic ar archives (which result in expected rebuilds not occuring)
