@@ -2,27 +2,20 @@
 Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
-Version: 4.0
-Release: 5.1%{?dist}
+Version: 4.1
+Release: 1%{?dist}
 License: GPLv3+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
 Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.bz2
 
-Patch1: make-4.0-noclock_gettime.patch
-Patch2: make-4.0-j8k.patch
-Patch3: make-4.0-getcwd.patch
-Patch4: make-4.0-err-reporting.patch
+Patch0: make-getcwd.patch
+Patch1: make-newlines.patch
 
-# Upstream: https://savannah.gnu.org/bugs/?30748
-Patch6: make-4.0-weird-shell.patch
-
-Patch7: make-4.0-newlines.patch
-
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
 BuildRequires: procps
+BuildRequires: git
 
 %description
 A GNU tool for controlling the generation of executables and other
@@ -40,13 +33,7 @@ Group: Development/Libraries
 The make-devel package contains gnumake.h.
 
 %prep
-%setup -q
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch6 -p1
-%patch7 -p1
+%autosetup -p0 -Sgit
 
 rm -f tests/scripts/features/parallelism.orig
 
@@ -55,8 +42,7 @@ rm -f tests/scripts/features/parallelism.orig
 make %{?_smp_mflags}
 
 %install
-rm -rf ${RPM_BUILD_ROOT}
-make DESTDIR=$RPM_BUILD_ROOT install
+%make_install
 ln -sf make ${RPM_BUILD_ROOT}/%{_bindir}/gmake
 ln -sf make.1 ${RPM_BUILD_ROOT}/%{_mandir}/man1/gmake.1
 rm -f ${RPM_BUILD_ROOT}/%{_infodir}/dir
@@ -67,9 +53,6 @@ rm -f ${RPM_BUILD_ROOT}/%{_infodir}/dir
 echo ============TESTING===============
 /usr/bin/env LANG=C make check && true
 echo ============END TESTING===========
-
-%clean
-rm -rf ${RPM_BUILD_ROOT}
 
 %post
 if [ -f %{_infodir}/make.info.gz ]; then # for --excludedocs
@@ -84,18 +67,20 @@ if [ $1 = 0 ]; then
 fi
 
 %files  -f %{name}.lang
-%defattr(-,root,root)
-%doc NEWS README COPYING AUTHORS
+%license COPYING
+%doc NEWS README AUTHORS
 %{_bindir}/*
 %{_mandir}/man*/*
 %{_infodir}/*.info*
 %{_includedir}/gnumake.h
 
 %files devel
-%defattr(-,root,root)
 %{_includedir}/gnumake.h
 
 %changelog
+* Sat Oct 24 2015 Zbigniew Jędrzejewski-Szmek <zbyszek@laptop> - 1:4.1-1
+- Update to latest version
+
 * Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:4.0-5.1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
