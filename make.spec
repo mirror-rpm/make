@@ -3,19 +3,34 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 4.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv3+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
 Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.bz2
 
-Patch0: make-getcwd.patch
-Patch1: make-newlines.patch
+Patch0: make-4.0-getcwd.patch
+Patch1: make-4.0-newlines.patch
 
+# Assume we don't have clock_gettime in configure, so that
+# make is not linked against -lpthread (and thus does not
+# limit stack to 2MB).
+Patch2: make-4.0-noclock_gettime.patch
+
+# BZs #142691, #17374
+Patch3: make-4.0-j8k.patch
+
+# make sure errno for error reporting is not lost accross _() calls
+Patch4: make-4.0-err-reporting.patch
+
+# Upstream: https://savannah.gnu.org/bugs/?30748
+# The default value of .SHELL_FLAGS is -c.
+Patch5: make-4.0-weird-shell.patch
+
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
 BuildRequires: procps
-BuildRequires: git
 
 %description
 A GNU tool for controlling the generation of executables and other
@@ -33,7 +48,13 @@ Group: Development/Libraries
 The make-devel package contains gnumake.h.
 
 %prep
-%autosetup -p0 -Sgit
+%setup -q
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 rm -f tests/scripts/features/parallelism.orig
 
@@ -42,7 +63,8 @@ rm -f tests/scripts/features/parallelism.orig
 make %{?_smp_mflags}
 
 %install
-%make_install
+rm -rf ${RPM_BUILD_ROOT}
+make DESTDIR=$RPM_BUILD_ROOT install
 ln -sf make ${RPM_BUILD_ROOT}/%{_bindir}/gmake
 ln -sf make.1 ${RPM_BUILD_ROOT}/%{_mandir}/man1/gmake.1
 rm -f ${RPM_BUILD_ROOT}/%{_infodir}/dir
@@ -53,6 +75,9 @@ rm -f ${RPM_BUILD_ROOT}/%{_infodir}/dir
 echo ============TESTING===============
 /usr/bin/env LANG=C make check && true
 echo ============END TESTING===========
+
+%clean
+rm -rf ${RPM_BUILD_ROOT}
 
 %post
 if [ -f %{_infodir}/make.info.gz ]; then # for --excludedocs
@@ -67,17 +92,22 @@ if [ $1 = 0 ]; then
 fi
 
 %files  -f %{name}.lang
-%license COPYING
-%doc NEWS README AUTHORS
+%defattr(-,root,root)
+%doc NEWS README COPYING AUTHORS
 %{_bindir}/*
 %{_mandir}/man*/*
 %{_infodir}/*.info*
 %{_includedir}/gnumake.h
 
 %files devel
+%defattr(-,root,root)
 %{_includedir}/gnumake.h
 
 %changelog
+* Thu Oct 29 2015 Patsy Franklin <pfrankli@redhat.com> 1:4.1-2
+- Include patches dropped in last update as they fix reported bugs and
+  update the spec file to include more info on the patches.
+
 * Sat Oct 24 2015 Zbigniew Jędrzejewski-Szmek <zbyszek@laptop> - 1:4.1-1
 - Update to latest version
 
