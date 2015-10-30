@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 4.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: GPLv3+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -31,6 +31,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
 BuildRequires: procps
+BuildRequires: guile-devel
 
 %description
 A GNU tool for controlling the generation of executables and other
@@ -59,7 +60,7 @@ The make-devel package contains gnumake.h.
 rm -f tests/scripts/features/parallelism.orig
 
 %build
-%configure
+%configure --with-guile
 make %{?_smp_mflags}
 
 %install
@@ -104,6 +105,9 @@ fi
 %{_includedir}/gnumake.h
 
 %changelog
+* Thu Oct 29 2015 Patsy Franklin <pfrankli@redhat.com> 1:4.1-3
+- Enable Guile support.
+
 * Thu Oct 29 2015 Patsy Franklin <pfrankli@redhat.com> 1:4.1-2
 - Include patches dropped in last update as they fix reported bugs and
   update the spec file to include more info on the patches.
