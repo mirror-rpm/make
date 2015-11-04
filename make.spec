@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 4.1
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: GPLv3+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -26,6 +26,9 @@ Patch4: make-4.0-err-reporting.patch
 # Upstream: https://savannah.gnu.org/bugs/?30748
 # The default value of .SHELL_FLAGS is -c.
 Patch5: make-4.0-weird-shell.patch
+
+# make seg faults when run with no arguments
+Patch6: make-4.1-rh1277968.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
@@ -56,6 +59,7 @@ The make-devel package contains gnumake.h.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 rm -f tests/scripts/features/parallelism.orig
 
@@ -105,6 +109,10 @@ fi
 %{_includedir}/gnumake.h
 
 %changelog
+* Wed Nov  4 2015 Patsy Franklin <pfrankli@redhat.com> 1:4.1-4
+- Handle NULL returns from ttyname() Upstream Bug 43434.  
+  Resolves: #1277968
+
 * Thu Oct 29 2015 Patsy Franklin <pfrankli@redhat.com> 1:4.1-3
 - Enable Guile support.
 
