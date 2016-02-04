@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 4.1
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: GPLv3+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -109,6 +109,9 @@ fi
 %{_includedir}/gnumake.h
 
 %changelog
+* Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1:4.1-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
 * Wed Nov  4 2015 Patsy Franklin <pfrankli@redhat.com> 1:4.1-4
 - Handle NULL returns from ttyname() Upstream Bug 43434.  
   Resolves: #1277968
