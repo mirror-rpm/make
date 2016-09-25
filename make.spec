@@ -2,14 +2,14 @@
 Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
-Version: 4.1
-Release: 6%{?dist}
+Version: 4.2.1
+Release: 1%{?dist}
 License: GPLv3+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
 Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.bz2
 
-Patch0: make-4.0-getcwd.patch
+Patch0: make-4.2-getcwd.patch
 Patch1: make-4.0-newlines.patch
 
 # Assume we don't have clock_gettime in configure, so that
@@ -18,17 +18,11 @@ Patch1: make-4.0-newlines.patch
 Patch2: make-4.0-noclock_gettime.patch
 
 # BZs #142691, #17374
-Patch3: make-4.0-j8k.patch
-
-# make sure errno for error reporting is not lost accross _() calls
-Patch4: make-4.0-err-reporting.patch
+Patch3: make-4.2-j8k.patch
 
 # Upstream: https://savannah.gnu.org/bugs/?30748
 # The default value of .SHELL_FLAGS is -c.
-Patch5: make-4.0-weird-shell.patch
-
-# make seg faults when run with no arguments
-Patch6: make-4.1-rh1277968.patch
+Patch4: make-4.0-weird-shell.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
@@ -59,8 +53,6 @@ The make-devel package contains gnumake.h.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
-%patch6 -p1
 
 rm -f tests/scripts/features/parallelism.orig
 
@@ -110,6 +102,9 @@ fi
 %{_includedir}/gnumake.h
 
 %changelog
+* Sun Sep 25 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1:4.2.1-1
+- Rebase to make-4.2.1. Remove obsolete patches. BZ #1338558
+
 * Sun Sep 25 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1:4.1-6
 - Make test suite requires Perl to run.
 
