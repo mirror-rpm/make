@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 4.1
-Release: 5%{?dist}
+Release: 6%{?dist}
 License: GPLv3+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -34,6 +34,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
 BuildRequires: procps
+BuildRequires: perl
 BuildRequires: guile-devel
 
 %description
@@ -109,6 +110,9 @@ fi
 %{_includedir}/gnumake.h
 
 %changelog
+* Sun Sep 25 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1:4.1-6
+- Make test suite requires Perl to run.
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1:4.1-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
