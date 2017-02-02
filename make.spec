@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 4.2.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv3+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -91,7 +91,8 @@ fi
 
 %files  -f %{name}.lang
 %defattr(-,root,root)
-%doc NEWS README COPYING AUTHORS
+%license COPYING
+%doc NEWS README AUTHORS
 %{_bindir}/*
 %{_mandir}/man*/*
 %{_infodir}/*.info*
@@ -102,6 +103,9 @@ fi
 %{_includedir}/gnumake.h
 
 %changelog
+* Wed Feb 01 2017 Stephen Gallagher <sgallagh@redhat.com> - 4.2.1-2
+- Add missing %%license macro
+
 * Sun Sep 25 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1:4.2.1-1
 - Rebase to make-4.2.1. Remove obsolete patches. BZ #1338558
 
