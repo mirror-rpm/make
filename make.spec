@@ -28,7 +28,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
 BuildRequires: procps
-BuildRequires: perl
+BuildRequires: perl-interpreter
 BuildRequires: guile-devel
 
 %description
