@@ -1,0 +1,33 @@
+---
+# Tests to run against Docker and Classic mode
+- hosts: localhost
+  roles:
+  - role: standard-test-beakerlib
+    tags:
+    - classic
+    - container
+    tests:
+    - GNU-make-utility-v-3-82-shipped-with-el7-breaks
+    - order-only
+    - Use-after-free-when-eval-in-variable
+    - make-3-79-has-a-parsing-bug
+    - smoke-check-make-runs
+    required_packages:
+    - make
+    - coreutils
+    - diffutils
+    - sed
+    - gcc
+    - which
+
+# Tests to run against Atomic Host
+- hosts: localhost
+  roles:
+  - role: standard-test-beakerlib
+    tags:
+    - atomic
+    tests:
+    - GNU-make-utility-v-3-82-shipped-with-el7-breaks
+    - order-only
+    - Use-after-free-when-eval-in-variable
+    - make-3-79-has-a-parsing-bug
