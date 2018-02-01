@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 4.2.1
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: GPLv3+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -23,6 +23,12 @@ Patch3: make-4.2-j8k.patch
 # Upstream: https://savannah.gnu.org/bugs/?30748
 # The default value of .SHELL_FLAGS is -c.
 Patch4: make-4.0-weird-shell.patch
+
+# Upstream patch: http://git.savannah.gnu.org/cgit/make.git/patch/?id=48c8a116a914a325a0497721f5d8b58d5bba34d4
+# Fixes incorrect use of glibc 2.27 glob internals.
+Patch5: make-4.2.1-glob-fix.patch
+# Unfortunately the above patches configure.ac, so:
+BuildRequires: autoconf, automake
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
@@ -53,6 +59,7 @@ The make-devel package contains gnumake.h.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 rm -f tests/scripts/features/parallelism.orig
 
@@ -103,6 +110,9 @@ fi
 %{_includedir}/gnumake.h
 
 %changelog
+* Thu Feb 01 2018 Richard W.M. Jones <rjones@redhat.com> - 1:4.2.1-5
+- Add upstream patch to fix incorrect use of glibc 2.27 glob internals.
+
 * Thu Aug 03 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1:4.2.1-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
