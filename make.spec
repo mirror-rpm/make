@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 4.2.1
-Release: 5%{?dist}
+Release: 6%{?dist}
 License: GPLv3+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -24,9 +24,12 @@ Patch3: make-4.2-j8k.patch
 # The default value of .SHELL_FLAGS is -c.
 Patch4: make-4.0-weird-shell.patch
 
-# Upstream patch: http://git.savannah.gnu.org/cgit/make.git/patch/?id=48c8a116a914a325a0497721f5d8b58d5bba34d4
+# Upstream patch: https://git.savannah.gnu.org/cgit/make.git/patch/?id=193f1e81edd6b1b56b0eb0ff8aa4b41c7b4257b4
+# Fixes wrong assumptions of glibc's glob internals.
+Patch5: make-4.2.1-glob-fix-2.patch
+# Upstream patch: https://git.savannah.gnu.org/cgit/make.git/patch/?id=48c8a116a914a325a0497721f5d8b58d5bba34d4
 # Fixes incorrect use of glibc 2.27 glob internals.
-Patch5: make-4.2.1-glob-fix.patch
+Patch6: make-4.2.1-glob-fix.patch
 # Unfortunately the above patches configure.ac, so:
 BuildRequires: autoconf, automake
 
@@ -53,13 +56,7 @@ Group: Development/Libraries
 The make-devel package contains gnumake.h.
 
 %prep
-%setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
+%autosetup -p1
 
 rm -f tests/scripts/features/parallelism.orig
 
@@ -110,6 +107,9 @@ fi
 %{_includedir}/gnumake.h
 
 %changelog
+* Fri Feb 02 2018 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1:4.2.1-6
+- Fix wrong assumptions of glibc's glob internals
+
 * Thu Feb 01 2018 Richard W.M. Jones <rjones@redhat.com> - 1:4.2.1-5
 - Add upstream patch to fix incorrect use of glibc 2.27 glob internals.
 
