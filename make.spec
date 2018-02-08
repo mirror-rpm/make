@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 4.2.1
-Release: 6%{?dist}
+Release: 7%{?dist}
 License: GPLv3+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -107,6 +107,9 @@ fi
 %{_includedir}/gnumake.h
 
 %changelog
+* Thu Feb 08 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1:4.2.1-7
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
+
 * Fri Feb 02 2018 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1:4.2.1-6
 - Fix wrong assumptions of glibc's glob internals
 
