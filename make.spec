@@ -33,7 +33,6 @@ Patch6: make-4.2.1-glob-fix.patch
 # Unfortunately the above patches configure.ac, so:
 BuildRequires: autoconf, automake
 
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
 BuildRequires: procps
