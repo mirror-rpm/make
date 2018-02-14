@@ -77,9 +77,6 @@ echo ============TESTING===============
 /usr/bin/env LANG=C make check && true
 echo ============END TESTING===========
 
-%clean
-rm -rf ${RPM_BUILD_ROOT}
-
 %post
 if [ -f %{_infodir}/make.info.gz ]; then # for --excludedocs
    /sbin/install-info %{_infodir}/make.info.gz %{_infodir}/dir --entry="* Make: (make).                 The GNU make utility." || :
