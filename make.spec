@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 4.2.1
-Release: 7%{?dist}
+Release: 8%{?dist}
 License: GPLv3+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -38,6 +38,7 @@ Requires(preun): /sbin/install-info
 BuildRequires: procps
 BuildRequires: perl-interpreter
 BuildRequires: guile-devel
+BuildRequires: gcc
 
 %description
 A GNU tool for controlling the generation of executables and other
@@ -103,6 +104,9 @@ fi
 %{_includedir}/gnumake.h
 
 %changelog
+* Tue Feb 20 2018 Rex Dieter <rdieter@fedoraproject.org> - 1:4.2.1-8
+- BR: gcc, rebuild (guile)
+
 * Thu Feb 08 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1:4.2.1-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
