@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 4.2.1
-Release: 8%{?dist}
+Release: 9%{?dist}
 License: GPLv3+
 Group: Development/Tools
 URL: http://www.gnu.org/software/make/
@@ -30,7 +30,12 @@ Patch5: make-4.2.1-glob-fix-2.patch
 # Upstream patch: https://git.savannah.gnu.org/cgit/make.git/patch/?id=48c8a116a914a325a0497721f5d8b58d5bba34d4
 # Fixes incorrect use of glibc 2.27 glob internals.
 Patch6: make-4.2.1-glob-fix.patch
-# Unfortunately the above patches configure.ac, so:
+Patch7: make-4.2.1-glob-fix-3.patch
+
+# Perl 5.26 removed the implicit CWD in @INC. 
+Patch8: make-4.2.1-test-driver.patch
+
+# Unfortunately the glob patches configure.ac, so:
 BuildRequires: autoconf, automake
 
 Requires(post): /sbin/install-info
@@ -61,6 +66,13 @@ The make-devel package contains gnumake.h.
 rm -f tests/scripts/features/parallelism.orig
 
 %build
+# Since we made a change to configure.ac (and configure) touch
+# the files to avoid rebuild problems with automake versioning.
+# Specifically make expects 1.15 but some systems use 1.16.1.
+touch `find . -name configure`
+touch `find . -name aclocal.m4`
+touch `find . -name Makefile.in`
+
 %configure --with-guile
 make %{?_smp_mflags}
 
@@ -104,6 +116,11 @@ fi
 %{_includedir}/gnumake.h
 
 %changelog
+* Wed Apr 25 2018 Patsy Griffin Franklin <pfrankli@redhat.com> 1:4.2.1-9
+- Fix build failure caused by automake versioning differences related
+  to the glob changes.
+- Fix testing failure due to Perl changes related to expanding paths.
+
 * Tue Feb 20 2018 Rex Dieter <rdieter@fedoraproject.org> - 1:4.2.1-8
 - BR: gcc, rebuild (guile)
 
