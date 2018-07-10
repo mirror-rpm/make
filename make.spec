@@ -103,7 +103,6 @@ if [ $1 = 0 ]; then
 fi
 
 %files  -f %{name}.lang
-%defattr(-,root,root)
 %license COPYING
 %doc NEWS README AUTHORS
 %{_bindir}/*
@@ -112,7 +111,6 @@ fi
 %{_includedir}/gnumake.h
 
 %files devel
-%defattr(-,root,root)
 %{_includedir}/gnumake.h
 
 %changelog
