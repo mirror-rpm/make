@@ -37,9 +37,6 @@ Patch8: make-4.2.1-test-driver.patch
 
 # Unfortunately the glob patches configure.ac, so:
 BuildRequires: autoconf, automake
-
-Requires(post): /sbin/install-info
-Requires(preun): /sbin/install-info
 BuildRequires: procps
 BuildRequires: perl-interpreter
 BuildRequires: guile-devel
@@ -89,18 +86,6 @@ rm -f ${RPM_BUILD_ROOT}/%{_infodir}/dir
 echo ============TESTING===============
 /usr/bin/env LANG=C make check && true
 echo ============END TESTING===========
-
-%post
-if [ -f %{_infodir}/make.info.gz ]; then # for --excludedocs
-   /sbin/install-info %{_infodir}/make.info.gz %{_infodir}/dir --entry="* Make: (make).                 The GNU make utility." || :
-fi
-
-%preun
-if [ $1 = 0 ]; then
-   if [ -f %{_infodir}/make.info.gz ]; then # for --excludedocs
-      /sbin/install-info --delete %{_infodir}/make.info.gz %{_infodir}/dir --entry="* Make: (make).                 The GNU make utility." || :
-   fi
-fi
 
 %files  -f %{name}.lang
 %license COPYING
