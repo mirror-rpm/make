@@ -5,7 +5,6 @@ Epoch: 1
 Version: 4.2.1
 Release: 10%{?dist}
 License: GPLv3+
-Group: Development/Tools
 URL: http://www.gnu.org/software/make/
 Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.bz2
 
@@ -52,7 +51,6 @@ makefile.
 
 %package devel
 Summary: Header file for externally visible definitions
-Group: Development/Libraries
 
 %description devel
 The make-devel package contains gnumake.h.
