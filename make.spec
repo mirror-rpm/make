@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 4.2.1
-Release: 11%{?dist}
+Release: 12%{?dist}
 License: GPLv3+
 URL: http://www.gnu.org/software/make/
 Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.bz2
@@ -31,14 +31,18 @@ Patch5: make-4.2.1-glob-fix-2.patch
 Patch6: make-4.2.1-glob-fix.patch
 Patch7: make-4.2.1-glob-fix-3.patch
 
-# Perl 5.26 removed the implicit CWD in @INC. 
+# Perl 5.26 removed the implicit CWD in @INC.
 Patch8: make-4.2.1-test-driver.patch
+
+# Upstream patch: https://git.savannah.gnu.org/cgit/make.git/commit/?id=fbf71ec25a5986d9003ac16ee9e23675feac9053
+# Adds support of guile 2.2
+Patch9: 0001-configure.ac-SV-50648-Detect-Guile-2.2-packages.patch
 
 # Unfortunately the glob patches configure.ac, so:
 BuildRequires: autoconf, automake
 BuildRequires: procps
 BuildRequires: perl-interpreter
-BuildRequires: guile-devel
+BuildRequires: pkgconfig(guile-2.2)
 BuildRequires: gcc
 
 %description
@@ -97,6 +101,9 @@ echo ============END TESTING===========
 %{_includedir}/gnumake.h
 
 %changelog
+* Sun Feb 17 2019 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1:4.2.1-12
+- Switch to latest guile version
+
 * Fri Feb 01 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1:4.2.1-11
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
@@ -139,7 +146,7 @@ echo ============END TESTING===========
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
 * Wed Nov  4 2015 Patsy Franklin <pfrankli@redhat.com> 1:4.1-4
-- Handle NULL returns from ttyname() Upstream Bug 43434.  
+- Handle NULL returns from ttyname() Upstream Bug 43434.
   Resolves: #1277968
 
 * Thu Oct 29 2015 Patsy Franklin <pfrankli@redhat.com> 1:4.1-3
@@ -467,12 +474,12 @@ echo ============END TESTING===========
 * Thu Apr 15 1999 Bill Nottingham <notting@redhat.com>
 - added a serial tag so it upgrades right
 
-* Sun Mar 21 1999 Cristian Gafton <gafton@redhat.com> 
+* Sun Mar 21 1999 Cristian Gafton <gafton@redhat.com>
 - auto rebuild in the new build environment (release 5)
 
 * Wed Sep 16 1998 Cristian Gafton <gafton@redhat.com>
 - added a patch for large file support in glob
- 
+
 * Tue Aug 18 1998 Jeff Johnson <jbj@redhat.com>
 - update to 3.77
 
