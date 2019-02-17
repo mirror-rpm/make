@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 4.2.1
-Release: 12%{?dist}
+Release: 13%{?dist}
 License: GPLv3+
 URL: http://www.gnu.org/software/make/
 Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.bz2
@@ -38,8 +38,8 @@ Patch8: make-4.2.1-test-driver.patch
 # Adds support of guile 2.2
 Patch9: 0001-configure.ac-SV-50648-Detect-Guile-2.2-packages.patch
 
-# Unfortunately the glob patches configure.ac, so:
-BuildRequires: autoconf, automake
+# autoreconf
+BuildRequires: autoconf, automake, gettext-devel
 BuildRequires: procps
 BuildRequires: perl-interpreter
 BuildRequires: pkgconfig(guile-2.2)
@@ -65,19 +65,13 @@ The make-devel package contains gnumake.h.
 rm -f tests/scripts/features/parallelism.orig
 
 %build
-# Since we made a change to configure.ac (and configure) touch
-# the files to avoid rebuild problems with automake versioning.
-# Specifically make expects 1.15 but some systems use 1.16.1.
-touch `find . -name configure`
-touch `find . -name aclocal.m4`
-touch `find . -name Makefile.in`
+autoreconf -vfi
 
 %configure --with-guile
-make %{?_smp_mflags}
+%make_build
 
 %install
-rm -rf ${RPM_BUILD_ROOT}
-make DESTDIR=$RPM_BUILD_ROOT install
+%make_install
 ln -sf make ${RPM_BUILD_ROOT}/%{_bindir}/gmake
 ln -sf make.1 ${RPM_BUILD_ROOT}/%{_mandir}/man1/gmake.1
 rm -f ${RPM_BUILD_ROOT}/%{_infodir}/dir
@@ -101,6 +95,9 @@ echo ============END TESTING===========
 %{_includedir}/gnumake.h
 
 %changelog
+* Sun Feb 17 2019 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1:4.2.1-13
+- Run autoreconf
+
 * Sun Feb 17 2019 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1:4.2.1-12
 - Switch to latest guile version
 
