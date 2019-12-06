@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 4.2.1
-Release: 14%{?dist}
+Release: 15%{?dist}
 License: GPLv3+
 URL: http://www.gnu.org/software/make/
 Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.bz2
@@ -37,6 +37,10 @@ Patch8: make-4.2.1-test-driver.patch
 # Upstream patch: https://git.savannah.gnu.org/cgit/make.git/commit/?id=fbf71ec25a5986d9003ac16ee9e23675feac9053
 # Adds support of guile 2.2
 Patch9: 0001-configure.ac-SV-50648-Detect-Guile-2.2-packages.patch
+
+# Upstream patch: https://git.savannah.gnu.org/cgit/make.git/commit/?id=b552b05251980f693c729e251f93f5225b400714
+# Avoids hangs in parallel builds
+Patch10: make-4.2.1-nonblocking-reads.patch
 
 # autoreconf
 BuildRequires: autoconf, automake, gettext-devel
@@ -95,6 +99,9 @@ echo ============END TESTING===========
 %{_includedir}/gnumake.h
 
 %changelog
+* Fri Dec 06 2019 DJ Delorie <dj@redhat.com> - 1:4.2.1-15
+- Use a non-blocking read with pselect to avoid hangs. BZ #1556839
+
 * Thu Jul 25 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1:4.2.1-14
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
 
