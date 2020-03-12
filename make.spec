@@ -2,45 +2,21 @@
 Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
-Version: 4.2.1
-Release: 16%{?dist}
+Version: 4.3
+Release: 1%{?dist}
 License: GPLv3+
 URL: http://www.gnu.org/software/make/
-Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.bz2
+Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.gz
 
-Patch0: make-4.2-getcwd.patch
-Patch1: make-4.0-newlines.patch
+Patch0: make-4.3-getcwd.patch
 
 # Assume we don't have clock_gettime in configure, so that
 # make is not linked against -lpthread (and thus does not
 # limit stack to 2MB).
-Patch2: make-4.0-noclock_gettime.patch
+Patch1: make-4.0-noclock_gettime.patch
 
 # BZs #142691, #17374
-Patch3: make-4.2-j8k.patch
-
-# Upstream: https://savannah.gnu.org/bugs/?30748
-# The default value of .SHELL_FLAGS is -c.
-Patch4: make-4.0-weird-shell.patch
-
-# Upstream patch: https://git.savannah.gnu.org/cgit/make.git/patch/?id=193f1e81edd6b1b56b0eb0ff8aa4b41c7b4257b4
-# Fixes wrong assumptions of glibc's glob internals.
-Patch5: make-4.2.1-glob-fix-2.patch
-# Upstream patch: https://git.savannah.gnu.org/cgit/make.git/patch/?id=48c8a116a914a325a0497721f5d8b58d5bba34d4
-# Fixes incorrect use of glibc 2.27 glob internals.
-Patch6: make-4.2.1-glob-fix.patch
-Patch7: make-4.2.1-glob-fix-3.patch
-
-# Perl 5.26 removed the implicit CWD in @INC.
-Patch8: make-4.2.1-test-driver.patch
-
-# Upstream patch: https://git.savannah.gnu.org/cgit/make.git/commit/?id=fbf71ec25a5986d9003ac16ee9e23675feac9053
-# Adds support of guile 2.2
-Patch9: 0001-configure.ac-SV-50648-Detect-Guile-2.2-packages.patch
-
-# Upstream patch: https://git.savannah.gnu.org/cgit/make.git/commit/?id=b552b05251980f693c729e251f93f5225b400714
-# Avoids hangs in parallel builds
-Patch10: make-4.2.1-nonblocking-reads.patch
+Patch2: make-4.3-j8k.patch
 
 # autoreconf
 BuildRequires: autoconf, automake, gettext-devel
@@ -99,6 +75,9 @@ echo ============END TESTING===========
 %{_includedir}/gnumake.h
 
 %changelog
+* Wed Mar 11 2020 DJ Delorie <dj@redhat.com> - 1:4.3-1
+- Rebase to make-4.3. Remove obsolete patches.
+
 * Wed Jan 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1:4.2.1-16
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
