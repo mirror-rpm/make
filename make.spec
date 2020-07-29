@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 4.3
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: GPLv3+
 URL: http://www.gnu.org/software/make/
 Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.gz
@@ -17,6 +17,11 @@ Patch1: make-4.0-noclock_gettime.patch
 
 # BZs #142691, #17374
 Patch2: make-4.3-j8k.patch
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1827850
+# https://savannah.gnu.org/bugs/?58232
+# Remove on next make rebase
+Patch3: make-4.3-cloexec.patch
 
 # autoreconf
 BuildRequires: autoconf, automake, gettext-devel
@@ -75,6 +80,9 @@ echo ============END TESTING===========
 %{_includedir}/gnumake.h
 
 %changelog
+* Wed Jul 29 2020 DJ Delorie <dj@redhat.com> - 1:4.3-3
+- Disable inheritance of jobserver FDs for recursive make. BZ #1827850
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1:4.3-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
