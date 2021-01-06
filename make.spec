@@ -24,6 +24,7 @@ Patch2: make-4.3-j8k.patch
 Patch3: make-4.3-cloexec.patch
 
 # autoreconf
+BuildRequires: make
 BuildRequires: autoconf, automake, gettext-devel
 BuildRequires: procps
 BuildRequires: perl-interpreter
