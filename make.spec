@@ -3,10 +3,18 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 4.3
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: GPLv3+
 URL: http://www.gnu.org/software/make/
 Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.gz
+
+%if 0%{?rhel} > 0
+# This gives the user the option of saying --with guile, but defaults to WITHOUT
+%bcond_with guile
+%else
+# This gives the user the option of saying --without guile, but defaults to WITH
+%bcond_without guile
+%endif
 
 Patch0: make-4.3-getcwd.patch
 
@@ -28,7 +36,9 @@ BuildRequires: make
 BuildRequires: autoconf, automake, gettext-devel
 BuildRequires: procps
 BuildRequires: perl-interpreter
+%if %{with guile}
 BuildRequires: pkgconfig(guile-2.2)
+%endif
 BuildRequires: gcc
 
 %description
@@ -53,7 +63,13 @@ rm -f tests/scripts/features/parallelism.orig
 %build
 autoreconf -vfi
 
-%configure --with-guile
+%configure \
+%if %{with guile}
+    --with-guile
+%else
+    --without-guile
+%endif
+
 %make_build
 
 %install
@@ -81,6 +97,10 @@ echo ============END TESTING===========
 %{_includedir}/gnumake.h
 
 %changelog
+* Fri Feb 19 2021 DJ Delorie <dj@redhat.com> - 1:4.3-5
+- Allow users to build with or without guile support as desired.
+- Allow derivative downstreams to default to disabling guile support.
+
 * Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1:4.3-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
