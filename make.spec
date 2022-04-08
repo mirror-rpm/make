@@ -3,7 +3,7 @@ Summary: A GNU tool which simplifies the build process for users
 Name: make
 Epoch: 1
 Version: 4.3
-Release: 7%{?dist}
+Release: 8%{?dist}
 License: GPLv3+
 URL: http://www.gnu.org/software/make/
 Source: ftp://ftp.gnu.org/gnu/make/make-%{version}.tar.gz
@@ -31,11 +31,16 @@ Patch2: make-4.3-j8k.patch
 # Remove on next make rebase
 Patch3: make-4.3-cloexec.patch
 
+# https://bugzilla.redhat.com/show_bug.cgi?id=2010506
+# https://savannah.gnu.org/bugs/?59093
+# Remove on next make rebase
+Patch4: make-4.3-filter-out.patch
+
 # autoreconf
 BuildRequires: make
 BuildRequires: autoconf, automake, gettext-devel
 BuildRequires: procps
-BuildRequires: perl-interpreter
+BuildRequires: perl
 %if %{with guile}
 BuildRequires: pkgconfig(guile-2.2)
 %endif
@@ -97,6 +102,10 @@ echo ============END TESTING===========
 %{_includedir}/gnumake.h
 
 %changelog
+* Fri Apr 8 2022 DJ Delorie <dj@redhat.com> - 1:4.3-8
+- Rewrite filter/filter-out to avoid large stack usage. BZ #2010506
+- Require perl core modules for testsuite
+
 * Thu Jan 20 2022 Fedora Release Engineering <releng@fedoraproject.org> - 1:4.3-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
 
